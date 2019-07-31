@@ -5,7 +5,11 @@ module.exports = {
     'stylelint-scss',
   ],
   rules: {
+    'at-rule-no-unknown': [true, {
+      ignoreAtRules: ['mixin', 'if', 'else', 'content'],
+    }],
     'rule-empty-line-before': 'always',
     'order/properties-alphabetical-order': true,
+
   },
 };

@@ -12,7 +12,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'max-len': ['error', 150],
     'vue/html-closing-bracket-newline': ['error', {
-      multline: 'never',
+      multiline: 'never',
       singleline: 'never',
     }],
   },

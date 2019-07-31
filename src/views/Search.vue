@@ -1,33 +1,79 @@
 <template>
   <div class="search">
-    <h1>Where do you want to eat?</h1>
-    <s-button>
-      Should I eat there?
-    </s-button>
+    <content-box>
+      <h1>Where do you want to eat?</h1>
+      <form @submit.prevent="search">
+        <input-text
+          v-model="name"
+          icon="home"
+          placeholder="Restaurant"
+          required />
+        <input-text
+          v-model="address"
+          icon="map-pin"
+          placeholder="Town, City, Postcode"
+          required />
+        <c-button
+          type="submit"
+          variant="light">
+          Should I eat there?
+        </c-button>
+      </form>
+    </content-box>
   </div>
 </template>
 
 <script>
-import Button from '@/components/core/Button.vue';
+import CButton from '@/components/core/Button.vue';
+import ContentBox from '@/components/core/ContentBox.vue';
+import InputText from '@/components/core/InputText.vue';
 
 export default {
   components: {
-    's-button': Button,
+    CButton,
+    ContentBox,
+    InputText,
+  },
+
+  data() {
+    return {
+      name: '',
+      address: '',
+    };
+  },
+
+  methods: {
+    search() {
+      const { address, name } = this;
+
+      if (!name || name === '') {
+        return;
+      }
+
+      if (!address || address === '') {
+        return;
+      }
+
+      this.$router.push({
+        path: 'places/search',
+        query: { name, address },
+      });
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
+@import '~@/scss/colors';
+
 .search {
-  align-items: center;
-  background-image: linear-gradient(to right, rgba(#0B0C0F, 1.0) 40%, rgba(#0B0C0F, 0.0)), url('../assets/images/search-bg.jpg');
-  background-position: right;
-  background-size: contain;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  overflow: hidden;
+  background-color: $basalt;
+  background-image: linear-gradient(to right, rgba($basalt, 1.0) 40%, rgba($basalt, 0.0)), url('../assets/images/search-bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $white;
+  height: 100vh;
+  overflow: scroll;
 }
 </style>

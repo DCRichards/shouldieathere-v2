@@ -1,39 +1,38 @@
 <template>
   <div class="not-found">
-    <h1>We can't find that page</h1>
-    <h2>Looks like you're going hungry, son.</h2>
-    <s-button @click="$router.push('/')">
-      Go home
-    </s-button>
+    <content-box>
+      <h1>We can't find that page</h1>
+      <h2>Looks like you're going hungry, son.</h2>
+      <c-button @click="$router.push('/')">
+        Go home
+      </c-button>
+    </content-box>
   </div>
 </template>
 
 <script>
-import Button from '@/components/core/Button.vue';
+import CButton from '@/components/core/Button.vue';
+import ContentBox from '@/components/core/ContentBox.vue';
 
 export default {
   components: {
-    's-button': Button,
+    CButton,
+    ContentBox,
   },
 };
 </script>
 
 <style scoped lang="scss">
-.not-found {
-  align-items: center;
-  background-image: linear-gradient(rgba(#000, 0.5), rgba(#000, 0.8)), url('../assets/images/404-bg.jpg');
-  background-position: center;
-  background-size: cover;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  overflow: hidden;
-  text-align: center;
-}
+@import '~@/scss/colors';
 
-h1 {
-  font-size: 52px;
+.not-found {
+  background-color: $britain;
+  background-image: linear-gradient(rgba($black, 0.5), rgba($black, 0.8)), url('../assets/images/404-bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $white;
+  height: 100%;
+  overflow: hidden;
 }
 </style>

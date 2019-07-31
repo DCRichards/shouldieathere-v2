@@ -1,27 +1,59 @@
 <template>
-  <button @click="$emit('click', $event)">
+  <button
+    :class="`btn--${variant}`"
+    @click="$emit('click', $event)">
     <slot />
   </button>
 </template>
 
 <script>
-export default {};
+const variants = ['light', 'dark'];
+
+export default {
+  props: {
+    variant: {
+      type: String,
+      default: 'light',
+      validator: v => variants.includes(v),
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
+@import '~@/scss/colors';
+
 button {
-  background: #fff;
   border: none;
   border-radius: 5px;
-  color: #000;
-  font-size: 16px;
-  font-weight: 700;
-  min-width: 150px;
-  padding: 12px 20px;
+  font-size: 1.5rem;
+  margin: 1rem;
+  padding: 1rem 1.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
-button:hover {
-  background: #dedede;
-  cursor: pointer;
+.btn--light {
+  background: $white;
+  color: $basalt;
+
+  &:hover {
+    background: $britain;
+  }
+}
+
+.btn--dark {
+  background: $basalt;
+  color: $white;
+
+  &:hover {
+    background: $charcoal;
+  }
 }
 </style>

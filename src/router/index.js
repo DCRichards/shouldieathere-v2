@@ -9,11 +9,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: () => import(/* webpackChunkName: "about" */ '@/views/Search.vue'),
+      component: () => import('@/views/Search.vue'),
+    },
+    {
+      path: '/places/search',
+      component: () => import('@/views/Places.vue'),
+    },
+    {
+      path: '/places/:id',
+      component: () => import('@/views/Place.vue'),
     },
     {
       path: '*',
-      component: () => import(/* webpackChunkName: "notfound" */ '@/views/NotFound.vue'),
+      component: () => import('@/views/NotFound.vue'),
     },
   ],
 });

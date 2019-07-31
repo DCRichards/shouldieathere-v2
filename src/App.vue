@@ -8,21 +8,17 @@
 @import '~@/scss/typography';
 
 body {
-  font-family: 'Poppins', Helvetica, Arial, sans-serif;
+  font-family: $font-poppins;
   -webkit-font-smoothing: antialiased;
+}
+
+html, body, #app {
   height: 100%;
-}
-
-html {
-  height: 100vh;
-}
-
-html, body {
   margin: 0;
   padding: 0;
 }
 
 #app {
-  height: 100%;
+  height: 100vh;
 }
 </style>
