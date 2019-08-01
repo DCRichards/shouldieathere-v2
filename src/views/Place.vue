@@ -1,9 +1,41 @@
 <template>
   <div class="place">
-    <h1>Place</h1>
+    <content-box>
+      <div
+        v-if="place"
+        class="place-detail">
+        <h2>{{ place.BusinessName }}</h2>
+        <p>{{ address(place) }}</p>
+      </div>
+    </content-box>
   </div>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from 'vuex';
+import { address as addressMixin } from '@/mixins';
+import ContentBox from '@/components/core/ContentBox.vue';
+
+export default {
+  mixins: [addressMixin],
+
+  components: {
+    ContentBox,
+  },
+
+  computed: {
+    ...mapGetters('places', ['place']),
+  },
+
+  created() {
+    const { id } = this.$route.params;
+    this.$store.dispatch('places/get', { id });
+  },
+};
 </script>
+
+<style scoped lang="scss">
+.place {
+  height: 100vh;
+}
+</style>
