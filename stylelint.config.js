@@ -6,7 +6,7 @@ module.exports = {
   ],
   rules: {
     'at-rule-no-unknown': [true, {
-      ignoreAtRules: ['mixin', 'if', 'else', 'content'],
+      ignoreAtRules: ['mixin', 'if', 'else', 'content', 'include'],
     }],
     'rule-empty-line-before': 'always',
     'order/properties-alphabetical-order': true,
