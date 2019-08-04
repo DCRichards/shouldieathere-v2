@@ -17,9 +17,9 @@ class EstablishmentService extends Service {
   }
 }
 
-class RatingsService extends Service {
-  get() {
-    return this._client.get('Ratings');
+class ScoreService extends Service {
+  get(id) {
+    return this._client.get(`ScoreDescriptors?establishmentId=${id}`);
   }
 }
 
@@ -38,7 +38,7 @@ export default class FHRS {
     return new EstablishmentService(this._client);
   }
 
-  get ratings() {
-    return new RatingsService(this._client);
+  get scores() {
+    return new ScoreService(this._client);
   }
 }

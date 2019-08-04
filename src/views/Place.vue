@@ -6,6 +6,9 @@
         class="place-detail">
         <h2>{{ place.BusinessName }}</h2>
         <p>{{ address(place) }}</p>
+        <rating-card
+          class="overall-rating"
+          :rating="parseInt(place.RatingValue, 10)" />
       </div>
     </content-box>
   </div>
@@ -15,12 +18,14 @@
 import { mapGetters } from 'vuex';
 import { address as addressMixin } from '@/mixins';
 import ContentBox from '@/components/core/ContentBox.vue';
+import RatingCard from '@/components/RatingCard.vue';
 
 export default {
   mixins: [addressMixin],
 
   components: {
     ContentBox,
+    RatingCard,
   },
 
   computed: {
@@ -37,5 +42,9 @@ export default {
 <style scoped lang="scss">
 .place {
   height: 100vh;
+}
+
+.overall-rating {
+  height: 300px;
 }
 </style>

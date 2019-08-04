@@ -11,8 +11,7 @@
         <input-text
           v-model="address"
           icon="map-pin"
-          placeholder="Town, City, Postcode"
-          required />
+          placeholder="Town, City, Postcode" />
         <c-button
           type="submit"
           variant="light">
@@ -47,10 +46,6 @@ export default {
       const { address, name } = this;
 
       if (!name || name === '') {
-        return;
-      }
-
-      if (!address || address === '') {
         return;
       }
 

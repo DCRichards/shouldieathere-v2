@@ -51,27 +51,25 @@ export default {
 }
 
 .places-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0 auto;
   overflow: scroll;
-  text-align: left;
 }
 
 .places-list__item {
-  border-left: 3px solid $basalt;
+  background: $basalt;
+  margin: 2px;
   max-width: 400px;
-  padding-left: 1rem;
+  padding: 1rem;
 
   &:hover {
-    border-left: 3px solid $dust;
-    cursor: pointer;
+    background: $charcoal;
   }
 
   a {
-    color: $basalt;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: $dust;
+    color: $white;
   }
 }
 </style>

@@ -25,7 +25,7 @@ export default {
 
 button {
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   font-size: 1.5rem;
   margin: 1rem;
   padding: 1rem 1.5rem;
