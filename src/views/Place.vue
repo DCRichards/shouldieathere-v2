@@ -6,6 +6,12 @@
         class="place-detail">
         <h2>{{ place.BusinessName }}</h2>
         <p>{{ address(place) }}</p>
+        <c-stamp
+          icon="tag"
+          :text="place.BusinessType" />
+        <c-stamp
+          icon="calendar"
+          :text="ratingDate" />
         <rating-card
           class="overall-rating"
           :rating="parseInt(place.RatingValue, 10)" />
@@ -15,9 +21,11 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { mapGetters } from 'vuex';
 import { address as addressMixin } from '@/mixins';
 import ContentBox from '@/components/core/ContentBox.vue';
+import CStamp from '@/components/Stamp.vue';
 import RatingCard from '@/components/RatingCard.vue';
 
 export default {
@@ -25,11 +33,17 @@ export default {
 
   components: {
     ContentBox,
+    CStamp,
     RatingCard,
   },
 
   computed: {
     ...mapGetters('places', ['place']),
+
+    ratingDate() {
+      const rated = moment(this.place.RatingDate);
+      return rated.format('Do MMMM YYYY');
+    },
   },
 
   created() {

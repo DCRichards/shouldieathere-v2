@@ -35,10 +35,12 @@ export default {
       default: undefined,
       validator: name => !!feather.icons[name],
     },
+
     placeholder: {
       type: String,
       default: '',
     },
+
     value: {
       type: String,
       default: undefined,

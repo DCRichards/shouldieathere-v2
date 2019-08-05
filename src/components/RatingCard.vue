@@ -41,9 +41,7 @@ export default {
     rating: {
       type: Number,
       default: 0,
-      validator(v) {
-        return v >= 0 && v <= 5;
-      },
+      validator: value => value >= 0 && value <= 5,
     },
   },
 
