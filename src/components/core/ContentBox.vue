@@ -15,7 +15,7 @@ export default {};
   flex-direction: column;
   height: 100%;
   justify-content: center;
-  padding: 0 2rem;
+  padding: 0 1rem;
   text-align: center;
 }
 </style>

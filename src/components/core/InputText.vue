@@ -23,7 +23,7 @@ export default {
         return 'none';
       }
 
-      const svg = featherIcon.toSvg({ color: 'white' });
+      const svg = featherIcon.toSvg({ color: 'basalt' });
 
       return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
     },
@@ -59,14 +59,30 @@ input[type="text"] {
   background-repeat: no-repeat;
   background-size: 30px 30px;
   border: none;
-  border-bottom: 3px solid $white;
-  caret-color: $white;
-  color: $white;
+  border-bottom: 3px solid $basalt;
+  caret-color: $basalt;
+  color: $basalt;
   font-size: 1.5rem;
   margin: 1rem;
   min-height: 50px;
   padding: 0 35px;
   text-align: center;
+
+  &::-webkit-input-placeholder {
+    color: $britain;
+  }
+
+  &::-moz-placeholder {
+    color: $britain;
+  }
+
+  &:-moz-placeholder {
+    color: $britain;
+  }
+
+  &:-ms-input-placeholder {
+    color: $britain;
+  }
 
   &:focus {
     outline: none;

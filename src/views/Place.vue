@@ -4,16 +4,26 @@
       <div
         v-if="place"
         class="place-detail">
-        <h2>{{ place.BusinessName }}</h2>
-        <p>{{ address(place) }}</p>
-        <c-stamp
-          icon="tag"
-          :text="place.BusinessType" />
-        <c-stamp
-          icon="calendar"
-          :text="ratingDate" />
+        <place-map
+          class="place-detail__map"
+          :lat="lat"
+          :lon="lon" />
+        <div class="place-detail__header">
+          <div class="header__title">
+            <h1>{{ place.BusinessName }}</h1>
+            <p>{{ address(place) }}</p>
+          </div>
+          <div class="header__tags">
+            <c-stamp
+              icon="tag"
+              :text="place.BusinessType" />
+            <c-stamp
+              icon="calendar"
+              :text="ratingDate" />
+          </div>
+        </div>
         <rating-card
-          class="overall-rating"
+          class="place-detail__rating"
           :rating="parseInt(place.RatingValue, 10)" />
       </div>
     </content-box>
@@ -26,7 +36,16 @@ import { mapGetters } from 'vuex';
 import { address as addressMixin } from '@/mixins';
 import ContentBox from '@/components/core/ContentBox.vue';
 import CStamp from '@/components/Stamp.vue';
+import PlaceMap from '@/components/PlaceMap.vue';
 import RatingCard from '@/components/RatingCard.vue';
+
+function parseFlt(str) {
+  try {
+    return parseFloat(str, 10);
+  } catch (e) {
+    return undefined;
+  }
+}
 
 export default {
   mixins: [addressMixin],
@@ -34,6 +53,7 @@ export default {
   components: {
     ContentBox,
     CStamp,
+    PlaceMap,
     RatingCard,
   },
 
@@ -43,6 +63,16 @@ export default {
     ratingDate() {
       const rated = moment(this.place.RatingDate);
       return rated.format('Do MMMM YYYY');
+    },
+
+    lat() {
+      const { latitude } = this.place.geocode;
+      return parseFlt(latitude);
+    },
+
+    lon() {
+      const { longitude } = this.place.geocode;
+      return parseFlt(longitude);
     },
   },
 
@@ -58,7 +88,16 @@ export default {
   height: 100vh;
 }
 
-.overall-rating {
+.place-detail {
+  width: 60%;
+}
+
+.place-detail__map {
+  height: 300px;
+  width: 100%;
+}
+
+.place-detail__rating {
   height: 300px;
 }
 </style>

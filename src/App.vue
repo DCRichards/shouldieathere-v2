@@ -8,7 +8,7 @@
 @import '~@/scss/typography';
 
 body {
-  font-family: $font-poppins;
+  font-family: $font-default;
   -webkit-font-smoothing: antialiased;
 }
 

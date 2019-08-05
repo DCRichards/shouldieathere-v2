@@ -7,6 +7,7 @@ services:
       - ./package.json:/usr/src/app/package.json
       - ./yarn.lock:/usr/src/app/yarn.lock
       - ./vue.config.js:/usr/src/app/vue.config.js
+      - ./.env.local:/usr/src/app/.env.local
       - ./src:/usr/src/app/src
       - ./build:/usr/src/app/build
       - ./public:/usr/src/app/public
