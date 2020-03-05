@@ -4,28 +4,34 @@
       <div
         v-if="place"
         class="place-detail">
-        <place-map
-          class="place-detail__map"
-          :lat="lat"
-          :lon="lon" />
-        <div class="place-detail__header">
-          <div class="header__title">
-            <h1>{{ place.BusinessName }}</h1>
-            <p>{{ address(place) }}</p>
-          </div>
-          <div class="header__tags">
-            <c-stamp
-              icon="tag"
-              :text="place.BusinessType" />
-            <c-stamp
-              icon="calendar"
-              :text="ratingDate" />
-          </div>
+        <div class="header__title">
+          <h1>{{ place.BusinessName }}</h1>
+          <h4>{{ formatAddress(place) }}</h4>
         </div>
+
         <rating-card
           class="place-detail__rating"
-          :rating="parseInt(place.RatingValue, 10)" />
+          :rating="place.RatingValue" />
+
+        <div class="header__tags">
+          <h3>Rating Details</h3>
+          <c-stamp icon="user-check">
+            <a
+              target="_blank"
+              :href="place.LocalAuthorityWebSite">{{ place.LocalAuthorityName }}
+            </a>
+          </c-stamp>
+          <c-stamp icon="calendar">
+            {{ ratingDate }}
+          </c-stamp>
+        </div>
       </div>
+
+      <router-link to="/">
+        <c-button variant="dark">
+          Search Again
+        </c-button>
+      </router-link>
     </content-box>
   </div>
 </template>
@@ -34,9 +40,9 @@
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 import { address as addressMixin } from '@/mixins';
+import CButton from '@/components/core/Button.vue';
 import ContentBox from '@/components/core/ContentBox.vue';
 import CStamp from '@/components/Stamp.vue';
-import PlaceMap from '@/components/PlaceMap.vue';
 import RatingCard from '@/components/RatingCard.vue';
 
 function parseFlt(str) {
@@ -51,9 +57,9 @@ export default {
   mixins: [addressMixin],
 
   components: {
+    CButton,
     ContentBox,
     CStamp,
-    PlaceMap,
     RatingCard,
   },
 
@@ -85,19 +91,24 @@ export default {
 
 <style scoped lang="scss">
 .place {
-  height: 100vh;
+  height: 100%;
 }
 
 .place-detail {
+  margin-bottom: 2rem;
   width: 60%;
 }
 
-.place-detail__map {
-  height: 300px;
-  width: 100%;
+.header__title {
+  margin-bottom: 1rem;
+
+   h1 {
+     margin-bottom: 0;
+   }
 }
 
 .place-detail__rating {
-  height: 300px;
+  margin: 3rem auto;
+  width: 60%;
 }
 </style>

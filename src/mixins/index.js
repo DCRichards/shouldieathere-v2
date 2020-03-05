@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 export const address = {
   methods: {
-    address(place) {
+    formatAddress(place) {
       const {
         AddressLine1,
         AddressLine2,

@@ -4,7 +4,7 @@
       class="stamp__icon"
       v-html="iconSrc" />
     <span class="stamp__text">
-      {{ text }}
+      <slot />
     </span>
   </div>
 </template>
@@ -17,12 +17,7 @@ export default {
     icon: {
       type: String,
       default: undefined,
-      validator: name => !!feather.icons[name],
-    },
-
-    text: {
-      type: String,
-      default: undefined,
+      validator: (name) => !!feather.icons[name],
     },
   },
 

@@ -1,116 +1,81 @@
 <template>
   <div class="rating-card">
-    <svg
-      class="rating-card__chart"
-      xmlns="http://www.w3.org/2000/svg"
-      version="1.1">
-      <circle
-        class="chart__inner"
-        :cx="cx"
-        :cy="cy"
-        :r="radius"
-        stroke="#ccc"
-        stroke-width="50"
-        fill="none" />
-      <circle
-        :class="['chart__outer', ratingClass]"
-        :cx="cx"
-        :cy="cy"
-        :r="radius"
-        stroke-width="50"
-        :transform-origin="`${cy} ${cx}`"
-        transform="rotate(-90)"
-        :stroke-dasharray="circumference"
-        :stroke-dashoffset="offset"
-        fill="none" />
-      <text
-        class="chart__label"
-        :x="cx"
-        :y="cy"
-        text-anchor="middle"
-        dominant-baseline="middle">
-        {{ rating }}
-      </text>
-    </svg>
+    <h3>{{ slogan }}</h3>
+    <div class="rating-display">
+      <rating-circle
+        :show-text="normalisedRating <= 1"
+        :rating="normalisedRating >= 0 ? normalisedRating : undefined" />
+      <rating-circle
+        :show-text="normalisedRating === 2"
+        :rating="normalisedRating >= 2 ? normalisedRating : undefined" />
+      <rating-circle
+        :show-text="normalisedRating === 3"
+        :rating="normalisedRating >= 3 ? normalisedRating : undefined" />
+      <rating-circle
+        :show-text="normalisedRating === 4"
+        :rating="normalisedRating >= 4 ? normalisedRating : undefined" />
+      <rating-circle
+        :show-text="normalisedRating === 5"
+        :rating="normalisedRating === 5 ? normalisedRating : undefined" />
+    </div>
   </div>
 </template>
 
 <script>
+import RatingCircle from '@/components/RatingCircle.vue';
+
 export default {
   props: {
     rating: {
-      type: Number,
-      default: 0,
-      validator: value => value >= 0 && value <= 5,
+      type: String,
+      required: true,
     },
   },
 
-  data() {
-    return {
-      cx: '50%',
-      cy: '50%',
-      radius: 100,
-    };
+  components: {
+    RatingCircle,
   },
 
   computed: {
-    circumference() {
-      return 2 * Math.PI * this.radius;
+    normalisedRating() {
+      try {
+        return Number.parseInt(this.rating, 10);
+      } catch (e) {
+        return this.rating;
+      }
     },
 
-    offset() {
-      const percent = this.rating / 5;
-      return this.circumference - this.circumference * percent;
-    },
-
-    ratingClass() {
-      if (this.rating <= 2) {
-        return 'color-morello';
+    slogan() {
+      if (Number.isNaN(this.rating)) {
+        return `This place is ${this.rating}`;
       }
 
-      if (this.rating === 3) {
-        return 'color-limoncello';
+      const base = `This place has a rating of ${this.rating}`;
+      switch (this.normalisedRating) {
+        case 0:
+          return `${base}. This place is dirtier than the back of your builder's transit van.`;
+        case 1:
+          return `${base}. Big dirty stinkin' plates.`;
+        case 2:
+          return `${base}. There's more grime here than a Skepta record.`;
+        case 3:
+          return `${base}. Not great. Not terrible.`;
+        case 4:
+          return `${base}. You'll be okay.`;
+        case 5:
+          return `${base}. What a time to be alive! `;
+        default:
+          return base;
       }
-
-      if (this.rating > 3) {
-        return 'color-absinthe';
-      }
-
-      return '';
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-@import '~@/scss/colors';
+@import '~@/scss/colors.scss';
 
-.rating-card__chart {
-  height: 100%;
-  width: 100%;
-
-  circle.chart__inner {
-    stroke: $britain;
-  }
-
-  circle.chart__outer {
-
-    &.color-absinthe {
-      stroke: $absinthe;
-    }
-
-    &.color-limoncello {
-      stroke: $limoncello;
-    }
-
-    &.color-morello {
-      stroke: $morello;
-    }
-  }
-
-  text.chart__label {
-    font-size: 3rem;
-    font-weight: 700;
-  }
+.rating-display {
+  display: flex;
 }
 </style>

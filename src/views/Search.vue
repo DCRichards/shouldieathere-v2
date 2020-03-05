@@ -1,9 +1,17 @@
 <template>
   <div class="search">
     <div class="search__container">
-      <div class="search__hero" />
+      <div class="search__hero">
+        <span>
+          <a
+            href="https://unsplash.com/@arty_nyc"
+            target="_blank">
+            Arthur Osipyan. New York, NY
+          </a>
+        </span>
+      </div>
       <div class="search__action">
-        <h1>Where do you want to eat?</h1>
+        <h1>I'm thinking of going to...</h1>
         <form
           class="search__form"
           @submit.prevent="search">
@@ -53,7 +61,7 @@ export default {
       }
 
       this.$router.push({
-        path: 'places/search',
+        path: '/places/search',
         query: { name, address },
       });
     },
@@ -68,7 +76,7 @@ export default {
 .search {
   background-color: $white;
   color: $basalt;
-  height: 100vh;
+  height: 100%;
   overflow: scroll;
 }
 
@@ -85,14 +93,22 @@ export default {
 }
 
 .search__hero {
+  background: url('../assets/images/search-bg.jpg');
+  background-position: right;
+  background-size: cover;
+  color: $white;
   display: none;
 
+  span {
+    display: table-cell;
+    font-size: .8rem;
+    padding: .5rem;
+    vertical-align: bottom;
+  }
+
   @include screen-size('lg') {
-    background-image: url('../assets/images/search-bg.jpg');
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: block;
+    display: table;
+    height: 100%;
     width: 30%;
   }
 }

@@ -1,11 +1,10 @@
 <template>
   <div class="not-found">
     <content-box>
-      <h1>We can't find that page</h1>
-      <h2>Looks like you're going hungry, son.</h2>
-      <c-button @click="$router.push('/')">
-        Go home
-      </c-button>
+      <h1>Are you lost?</h1>
+      <router-link to="/">
+        <c-button>Yep.</c-button>
+      </router-link>
     </content-box>
   </div>
 </template>

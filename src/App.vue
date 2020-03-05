@@ -1,8 +1,19 @@
 <template>
   <div id="app">
     <router-view />
+    <app-footer />
   </div>
 </template>
+
+<script>
+import AppFooter from '@/components/AppFooter.vue';
+
+export default {
+  components: {
+    AppFooter,
+  },
+};
+</script>
 
 <style lang="scss">
 @import '~@/scss/typography';
@@ -19,6 +30,8 @@ html, body, #app {
 }
 
 #app {
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 </style>

@@ -1,27 +1,6 @@
+/* eslint no-underscore-dangle: 0 */
 import axios from 'axios';
-
-/* eslint no-underscore-dangle: ["error", { "allow": ["_client"] }] */
-class Service {
-  constructor(client) {
-    this._client = client;
-  }
-}
-
-class EstablishmentService extends Service {
-  get(id) {
-    return this._client.get(`Establishments/${id}`);
-  }
-
-  search(name, address) {
-    return this._client.get(`Establishments?name=${name}&address=${address}`);
-  }
-}
-
-class ScoreService extends Service {
-  get(id) {
-    return this._client.get(`ScoreDescriptors?establishmentId=${id}`);
-  }
-}
+import Establishments from './Establishments';
 
 export default class FHRS {
   constructor() {
@@ -35,10 +14,6 @@ export default class FHRS {
   }
 
   get establishments() {
-    return new EstablishmentService(this._client);
-  }
-
-  get scores() {
-    return new ScoreService(this._client);
+    return new Establishments(this._client);
   }
 }

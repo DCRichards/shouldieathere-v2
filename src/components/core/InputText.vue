@@ -33,7 +33,7 @@ export default {
     icon: {
       type: String,
       default: undefined,
-      validator: name => !!feather.icons[name],
+      validator: (name) => !!feather.icons[name],
     },
 
     placeholder: {

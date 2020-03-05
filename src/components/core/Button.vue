@@ -14,7 +14,7 @@ export default {
     variant: {
       type: String,
       default: 'light',
-      validator: v => variants.includes(v),
+      validator: (v) => variants.includes(v),
     },
   },
 };
@@ -36,6 +36,15 @@ button {
 
   &:focus {
     outline: none;
+  }
+
+  &:disabled {
+    background: $dust;
+
+    &:hover {
+      background: $dust;
+      cursor: auto;
+    }
   }
 }
 
