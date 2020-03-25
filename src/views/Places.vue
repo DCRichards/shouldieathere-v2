@@ -20,8 +20,7 @@
           Should I eat there?
         </c-button>
       </form>
-      <c-loading v-if="loading" />
-
+      <c-loading v-if="!places && loading" />
 
       <div
         v-if="!loading && places"
@@ -37,13 +36,15 @@
         </div>
       </div>
 
-      <div class="page-control">
+      <div
+        v-if="!loading && pagination.totalPages > 1"
+        class="page-control">
         <c-button
           @click="previousPage"
           :disabled="pagination.page < 2"
           v-html="icons['skip-back'].toSvg()"
           variant="dark" />
-        <h3>{{ pagination.page }}</h3>
+        <h4>{{ pagination.page }} of {{ pagination.totalPages }}</h4>
         <c-button
           @click="nextPage"
           :disabled="pagination.totalPages <= pagination.page"
@@ -176,26 +177,22 @@ export default {
 }
 
 .places-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
   margin: 0 auto;
   overflow: scroll;
 }
 
 .places-list__item {
-  background: $basalt;
   border-radius: 3px;
   margin: 2px;
-  max-width: 400px;
   padding: 1rem;
+  text-align: left;
 
   &:hover {
-    background: $charcoal;
+    background: $britain;
   }
 
   a {
-    color: $white;
+    color: $basalt;
   }
 }
 </style>

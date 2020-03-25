@@ -36,6 +36,7 @@ export default class Establishments extends Service {
 
     params.append('pageNumber', page);
     params.append('pageSize', perPage);
+    params.append('sortOptionKey', 'alpha');
 
     return this._client.get(`Establishments?${params.toString()}`);
   }
