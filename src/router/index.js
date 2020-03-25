@@ -14,6 +14,14 @@ export default new Router({
     {
       path: '/places/search',
       component: () => import('@/views/Places.vue'),
+      props(route) {
+        const { name, address } = route.query;
+        let page = Number.parseInt(route.query.page, 10);
+        if (Number.isNaN(page)) {
+          page = 1;
+        }
+        return { name, address, page };
+      },
     },
     {
       path: '/places/:id',

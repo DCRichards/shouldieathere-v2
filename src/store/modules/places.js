@@ -13,6 +13,11 @@ export default {
 
   state: {
     places: [],
+    pagination: {
+      page: 0,
+      perPage: 0,
+      totalPages: 0,
+    },
     id: undefined,
     loading: false,
     error: undefined,
@@ -29,12 +34,19 @@ export default {
   },
 
   actions: {
-    async search({ commit }, { name, address }) {
+    async search({ commit }, {
+      name, address, page = 1, perPage = 20,
+    }) {
       commit(PLACES_LOADING);
 
       try {
-        const { data } = await fhrs.establishments.search(name, address);
-        commit(PLACES_SET, data.establishments);
+        const { data } = await fhrs.establishments.search(name, address, page, perPage);
+        commit(PLACES_SET, {
+          places: data.establishments,
+          totalPages: data.meta.totalPages,
+          page,
+          perPage,
+        });
       } catch (error) {
         commit(PLACES_ERROR, error);
       }
@@ -59,9 +71,16 @@ export default {
   },
 
   mutations: {
-    [PLACES_SET](state, places) {
+    [PLACES_SET](state, {
+      places, page, perPage, totalPages,
+    }) {
       Object.assign(state, {
         places,
+        pagination: {
+          page,
+          perPage,
+          totalPages,
+        },
         loading: false,
         error: undefined,
       });

@@ -5,12 +5,12 @@
         class="search-form"
         @submit.prevent="update">
         <input-text
-          v-model="name"
+          v-model="newName"
           icon="home"
           placeholder="Restaurant"
           required />
         <input-text
-          v-model="address"
+          v-model="newAddress"
           icon="map-pin"
           placeholder="Town, City, Postcode" />
         <c-button
@@ -21,6 +21,8 @@
         </c-button>
       </form>
       <c-loading v-if="loading" />
+
+
       <div
         v-if="!loading && places"
         class="places-list">
@@ -34,11 +36,26 @@
           </router-link>
         </div>
       </div>
+
+      <div class="page-control">
+        <c-button
+          @click="previousPage"
+          :disabled="pagination.page < 2"
+          v-html="icons['skip-back'].toSvg()"
+          variant="dark" />
+        <h3>{{ pagination.page }}</h3>
+        <c-button
+          @click="nextPage"
+          :disabled="pagination.totalPages <= pagination.page"
+          v-html="icons['skip-forward'].toSvg()"
+          variant="dark" />
+      </div>
     </content-box>
   </div>
 </template>
 
 <script>
+import feather from 'feather-icons';
 import { mapState } from 'vuex';
 import { address as addressMixin } from '@/mixins';
 import ContentBox from '@/components/core/ContentBox.vue';
@@ -47,6 +64,21 @@ import CButton from '@/components/core/Button.vue';
 import InputText from '@/components/core/InputText.vue';
 
 export default {
+  props: {
+    address: {
+      type: String,
+      default: undefined,
+    },
+    name: {
+      type: String,
+      default: undefined,
+    },
+    page: {
+      type: Number,
+      default: 1,
+    },
+  },
+
   mixins: [addressMixin],
 
   components: {
@@ -58,48 +90,68 @@ export default {
 
   data() {
     return {
-      address: null,
-      name: null,
+      newAddress: this.address,
+      newName: this.name,
+      newPage: this.page,
+      icons: feather.icons,
     };
   },
 
   computed: {
-    ...mapState('places', ['places', 'loading']),
+    ...mapState('places', [
+      'places', 'loading', 'error', 'pagination',
+    ]),
   },
 
   methods: {
     update() {
-      const { name, address } = this;
-      const { query } = this.$route;
-
-      if (query.name === name && query.address === address) {
-        this.search(name, address);
-        return;
-      }
-
       this.$router.replace({
         path: '/places/search',
-        query: { name, address },
+        query: {
+          name: this.newName,
+          address: this.newAddress,
+          page: this.newPage,
+        },
       });
     },
 
-    search(name, address) {
-      this.$store.dispatch('places/search', { name, address });
+    previousPage() {
+      this.newPage -= 1;
+      this.update();
+    },
+
+    nextPage() {
+      this.newPage += 1;
+      this.update();
+    },
+
+    search() {
+      const { name, address, page } = this;
+      this.$store.dispatch('places/search', { name, address, page });
     },
   },
 
   created() {
-    const { name, address } = this.$route.query;
-    this.name = name;
-    this.address = address;
-    this.search(name, address || '');
+    this.search();
   },
 
   watch: {
-    $route(r) {
-      const { name, address } = r.query;
+    name(o, n) {
+      if (o !== n) {
+        this.search();
+      }
+    },
 
-      this.search(name, address || '');
+    address(o, n) {
+      if (o !== n) {
+        this.search();
+      }
+    },
+
+    page(o, n) {
+      if (o !== n) {
+        this.search();
+      }
     },
   },
 };
@@ -115,6 +167,12 @@ export default {
 
 .search-form {
   margin-bottom: 1rem;
+}
+
+.page-control {
+  align-items: center;
+  display: flex;
+  margin: 1rem;
 }
 
 .places-list {
