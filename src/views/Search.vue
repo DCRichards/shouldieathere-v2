@@ -1,15 +1,6 @@
 <template>
   <div class="search">
     <div class="search__container">
-      <div class="search__hero">
-        <span>
-          <a
-            href="https://unsplash.com/@arty_nyc"
-            target="_blank">
-            Arthur Osipyan. New York, NY
-          </a>
-        </span>
-      </div>
       <div class="search__action">
         <h1>I'm thinking of going to...</h1>
         <form
@@ -86,42 +77,14 @@ export default {
   height: 100%;
 }
 
-.search__hero, .search__action {
+.search__action {
   align-items: center;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.search__hero {
-  background: url('../assets/images/search-bg.jpg');
-  background-position: right;
-  background-size: cover;
-  color: $white;
-  display: none;
-
-  span {
-    display: table-cell;
-    font-size: .8rem;
-    padding: .5rem;
-    vertical-align: bottom;
-  }
-
-  @include screen-size('lg') {
-    display: table;
-    height: 100%;
-    width: 30%;
-  }
-}
-
-.search__action {
-  display: flex;
   padding: 0 1rem;
   text-align: center;
   width: 100%;
-
-  @include screen-size('lg') {
-    width: 70%;
-  }
 }
 
 .search__form {

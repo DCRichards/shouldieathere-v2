@@ -1,56 +1,55 @@
 <template>
   <div class="place">
-    <content-box>
-      <div
-        v-if="place"
-        class="place-detail">
-        <div class="header__title">
-          <h1>{{ place.BusinessName }}</h1>
-          <h4>{{ formatAddress(place) }}</h4>
-        </div>
-
-        <rating-card
-          class="place-detail__rating"
-          :rating="place.RatingValue" />
-
-        <div class="header__tags">
-          <h3>Rating Details</h3>
-          <c-stamp icon="user-check">
-            <a
-              target="_blank"
-              :href="place.LocalAuthorityWebSite">{{ place.LocalAuthorityName }}
-            </a>
-          </c-stamp>
-          <c-stamp icon="calendar">
-            {{ ratingDate }}
-          </c-stamp>
-        </div>
+    <c-loading v-if="loading" />
+    <div
+      v-if="place && !loading"
+      class="place-detail">
+      <div class="header__title">
+        <h1>{{ place.BusinessName }}</h1>
+        <h4>{{ formatAddress(place) }}</h4>
       </div>
 
-      <router-link to="/">
-        <c-button variant="dark">
-          Search Again
-        </c-button>
-      </router-link>
-    </content-box>
+      <h4 class="rating__text">
+        {{ slogan }}
+      </h4>
+
+      <div class="header__tags">
+        <h4>Rating Details</h4>
+        <c-stamp icon="user-check">
+          <a
+            target="_blank"
+            :href="place.LocalAuthorityWebSite">{{ place.LocalAuthorityName }}
+          </a>
+        </c-stamp>
+        <c-stamp icon="calendar">
+          {{ ratingDate }} ({{ timeSinceRating }} ago)
+        </c-stamp>
+      </div>
+    </div>
+
+    <router-link to="/">
+      <c-button variant="dark">
+        Search Again
+      </c-button>
+    </router-link>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import { address as addressMixin } from '@/mixins';
 import CButton from '@/components/core/Button.vue';
-import ContentBox from '@/components/core/ContentBox.vue';
+import CLoading from '@/components/core/Loading.vue';
 import CStamp from '@/components/Stamp.vue';
-import RatingCard from '@/components/RatingCard.vue';
 
 function parseFlt(str) {
-  try {
-    return parseFloat(str, 10);
-  } catch (e) {
+  const f = Number.parseFloat(str, 10);
+  if (Number.isNaN(f)) {
     return undefined;
   }
+
+  return f;
 }
 
 export default {
@@ -58,17 +57,23 @@ export default {
 
   components: {
     CButton,
-    ContentBox,
+    CLoading,
     CStamp,
-    RatingCard,
   },
 
   computed: {
     ...mapGetters('places', ['place']),
+    ...mapState('places', ['loading']),
 
     ratingDate() {
       const rated = moment(this.place.RatingDate);
       return rated.format('Do MMMM YYYY');
+    },
+
+    timeSinceRating() {
+      const now = moment();
+      const rated = moment(this.place.RatingDate);
+      return moment.duration(now.diff(rated)).humanize();
     },
 
     lat() {
@@ -79,6 +84,32 @@ export default {
     lon() {
       const { longitude } = this.place.geocode;
       return parseFlt(longitude);
+    },
+
+    slogan() {
+      const rating = Number.parseInt(this.place.RatingValue, 10);
+
+      if (Number.isNaN(rating)) {
+        return `This place is ${this.rating}`;
+      }
+
+      const base = `This place has a rating of ${rating}`;
+      switch (rating) {
+        case 0:
+          return `${base}. This place is dirtier than the back of your builder's transit van.`;
+        case 1:
+          return `${base}. Big dirty stinkin' plates.`;
+        case 2:
+          return `${base}. There's more grime here than a Skepta record.`;
+        case 3:
+          return `${base}. Not great. Not terrible.`;
+        case 4:
+          return `${base}. You'll be okay.`;
+        case 5:
+          return `${base}. What a time to be alive! `;
+        default:
+          return base;
+      }
     },
   },
 
@@ -91,24 +122,32 @@ export default {
 
 <style scoped lang="scss">
 .place {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  margin: 1rem auto;
+  text-align: center;
 }
 
 .place-detail {
   margin-bottom: 2rem;
-  width: 60%;
+  width: 100%;
 }
 
 .header__title {
   margin-bottom: 1rem;
 
-   h1 {
-     margin-bottom: 0;
-   }
+  h1 {
+    margin-bottom: 0;
+  }
 }
 
 .place-detail__rating {
-  margin: 3rem auto;
-  width: 60%;
+  margin: 2rem auto;
+}
+
+.rating__text {
+  margin: 2rem;
 }
 </style>

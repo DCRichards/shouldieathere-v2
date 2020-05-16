@@ -1,57 +1,55 @@
 <template>
   <div class="places">
-    <content-box>
-      <form
-        class="search-form"
-        @submit.prevent="update">
-        <input-text
-          v-model="newName"
-          icon="home"
-          placeholder="Restaurant"
-          required />
-        <input-text
-          v-model="newAddress"
-          icon="map-pin"
-          placeholder="Town, City, Postcode" />
-        <c-button
-          :disabled="loading"
-          type="submit"
-          variant="dark">
-          Should I eat there?
-        </c-button>
-      </form>
-      <c-loading v-if="!places && loading" />
+    <form
+      class="search-form"
+      @submit.prevent="update">
+      <input-text
+        v-model="newName"
+        icon="home"
+        placeholder="Restaurant"
+        required />
+      <input-text
+        v-model="newAddress"
+        icon="map-pin"
+        placeholder="Town, City, Postcode" />
+      <c-button
+        :disabled="loading"
+        type="submit"
+        variant="dark">
+        Should I eat there?
+      </c-button>
+    </form>
+    <c-loading v-if="!places && loading" />
 
+    <div
+      v-if="!loading && places"
+      class="places-list">
       <div
-        v-if="!loading && places"
-        class="places-list">
-        <div
-          v-for="place in places"
-          :key="place.FHRSID"
-          class="places-list__item">
-          <router-link :to="`/places/${place.FHRSID}`">
-            <h2>{{ place.BusinessName }}</h2>
-            <p>{{ formatAddress(place) }}</p>
-          </router-link>
-        </div>
+        v-for="place in places"
+        :key="place.FHRSID"
+        class="places-list__item">
+        <router-link :to="`/places/${place.FHRSID}`">
+          <h2>{{ place.BusinessName }}</h2>
+          <p>{{ formatAddress(place) }}</p>
+        </router-link>
       </div>
+    </div>
 
-      <div
-        v-if="!loading && pagination.totalPages > 1"
-        class="page-control">
-        <c-button
-          @click="previousPage"
-          :disabled="pagination.page < 2"
-          v-html="icons['skip-back'].toSvg()"
-          variant="dark" />
-        <h4>{{ pagination.page }} of {{ pagination.totalPages }}</h4>
-        <c-button
-          @click="nextPage"
-          :disabled="pagination.totalPages <= pagination.page"
-          v-html="icons['skip-forward'].toSvg()"
-          variant="dark" />
-      </div>
-    </content-box>
+    <div
+      v-if="!loading && pagination.totalPages > 1"
+      class="page-control">
+      <c-button
+        @click="previousPage"
+        :disabled="pagination.page < 2"
+        v-html="icons['arrow-left'].toSvg()"
+        variant="dark" />
+      <h4>{{ pagination.page }} of {{ pagination.totalPages }}</h4>
+      <c-button
+        @click="nextPage"
+        :disabled="pagination.totalPages <= pagination.page"
+        v-html="icons['arrow-right'].toSvg()"
+        variant="dark" />
+    </div>
   </div>
 </template>
 
@@ -59,7 +57,6 @@
 import feather from 'feather-icons';
 import { mapState } from 'vuex';
 import { address as addressMixin } from '@/mixins';
-import ContentBox from '@/components/core/ContentBox.vue';
 import CLoading from '@/components/core/Loading.vue';
 import CButton from '@/components/core/Button.vue';
 import InputText from '@/components/core/InputText.vue';
@@ -85,7 +82,6 @@ export default {
   components: {
     CButton,
     CLoading,
-    ContentBox,
     InputText,
   },
 
@@ -163,7 +159,8 @@ export default {
 @import '~@/scss/responsive';
 
 .places {
-  height: 100%;
+  flex-grow: 1;
+  margin: 1rem auto;
 }
 
 .search-form {
@@ -173,6 +170,7 @@ export default {
 .page-control {
   align-items: center;
   display: flex;
+  justify-content: center;
   margin: 1rem;
 }
 

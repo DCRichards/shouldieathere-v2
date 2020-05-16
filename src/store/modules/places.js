@@ -63,7 +63,12 @@ export default {
       try {
         commit(PLACES_LOADING);
         const { data } = await fhrs.establishments.get(id);
-        commit(PLACES_SET, [data]);
+        commit(PLACES_SET, {
+          places: [data],
+          page: 0,
+          perPage: 0,
+          totalPages: 0,
+        });
       } catch (error) {
         commit(PLACES_ERROR, error);
       }

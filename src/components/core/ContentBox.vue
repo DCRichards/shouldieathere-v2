@@ -13,8 +13,8 @@ export default {};
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 100%;
   justify-content: center;
+  min-height: 100%;
   padding: 0 1rem;
   text-align: center;
 }
