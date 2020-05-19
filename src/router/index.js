@@ -28,6 +28,10 @@ export default new Router({
       component: () => import('@/views/Place.vue'),
     },
     {
+      path: '/places/:id/report',
+      component: () => import('@/views/Report.vue'),
+    },
+    {
       path: '*',
       component: () => import('@/views/NotFound.vue'),
     },

@@ -23,7 +23,11 @@ export default {
 
   computed: {
     iconSrc() {
-      return feather.icons[this.icon].toSvg();
+      if (this.icon) {
+        return feather.icons[this.icon].toSvg();
+      }
+
+      return '';
     },
   },
 };
@@ -35,7 +39,6 @@ export default {
 .stamp {
   align-items: center;
   display: flex;
-  justify-content: center;
   padding: 0.25rem;
   width: auto;
 }
@@ -44,5 +47,6 @@ export default {
   color: $basalt;
   height: 24px;
   margin-right: 10px;
+  width: 24px;
 }
 </style>

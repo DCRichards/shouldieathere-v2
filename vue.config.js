@@ -3,6 +3,12 @@ const StylelintPlugin = require('stylelint-webpack-plugin');
 module.exports = {
   lintOnSave: 'default',
 
+  chainWebpack: config => {
+    const sr = config.module.rule('svg');
+    sr.uses.clear();
+    sr.use('vue-svg-loader').loader('vue-svg-loader');
+  },
+
   configureWebpack: {
     plugins: [
       new StylelintPlugin({
@@ -13,7 +19,7 @@ module.exports = {
   },
 
   css: {
-    modules: true,
+    requireModuleExtension: true,
   },
 
   devServer: {

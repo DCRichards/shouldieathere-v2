@@ -9,27 +9,52 @@
         <h4>{{ formatAddress(place) }}</h4>
       </div>
 
+      <div class="place__type">
+        <div class="info__stamps">
+          <div class="type-stamp">
+            <component
+              class="stamp__icon"
+              :is="typeIcon" />
+            <p>{{ place.BusinessType }}</p>
+          </div>
+        </div>
+      </div>
+
       <h4 class="rating__text">
         {{ slogan }}
       </h4>
 
-      <div class="header__tags">
-        <h4>Rating Details</h4>
-        <c-stamp icon="user-check">
-          <a
-            target="_blank"
-            :href="place.LocalAuthorityWebSite">{{ place.LocalAuthorityName }}
-          </a>
-        </c-stamp>
-        <c-stamp icon="calendar">
-          {{ ratingDate }} ({{ timeSinceRating }} ago)
-        </c-stamp>
+      <h4>Rating Details</h4>
+
+      <div class="rating__details">
+        <div class="info__stamps">
+          <c-stamp icon="calendar">
+            {{ ratingDate }} ({{ timeSinceRating }} ago)
+          </c-stamp>
+          <c-stamp
+            class="authority-name"
+            icon="clipboard">
+            Rated by
+            <a
+              target="_blank"
+              :href="place.LocalAuthorityWebSite">{{ place.LocalAuthorityName }}
+            </a>
+          </c-stamp>
+        </div>
       </div>
     </div>
 
     <router-link to="/">
       <c-button variant="dark">
         Search Again
+      </c-button>
+    </router-link>
+
+    <router-link
+      to="report"
+      append>
+      <c-button variant="dark">
+        Report
       </c-button>
     </router-link>
   </div>
@@ -42,6 +67,10 @@ import { address as addressMixin } from '@/mixins';
 import CButton from '@/components/core/Button.vue';
 import CLoading from '@/components/core/Loading.vue';
 import CStamp from '@/components/Stamp.vue';
+
+import PubIcon from '@/assets/images/icons/pub.svg';
+import CafeIcon from '@/assets/images/icons/cafe.svg';
+import TakeawayIcon from '@/assets/images/icons/takeaway.svg';
 
 function parseFlt(str) {
   const f = Number.parseFloat(str, 10);
@@ -67,13 +96,24 @@ export default {
 
     ratingDate() {
       const rated = moment(this.place.RatingDate);
-      return rated.format('Do MMMM YYYY');
+      return rated.format('Do MMM YYYY');
     },
 
     timeSinceRating() {
       const now = moment();
       const rated = moment(this.place.RatingDate);
       return moment.duration(now.diff(rated)).humanize();
+    },
+
+    typeIcon() {
+      switch (this.place.BusinessTypeID) {
+        case 1:
+          return CafeIcon;
+        case 7843:
+          return PubIcon;
+        default:
+          return TakeawayIcon;
+      }
     },
 
     lat() {
@@ -121,6 +161,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '~@/scss/colors';
+
 .place {
   display: flex;
   flex-direction: column;
@@ -149,5 +191,31 @@ export default {
 
 .rating__text {
   margin: 2rem;
+}
+
+.authority-name a {
+  text-decoration: underline;
+}
+
+.info__stamps {
+  display: inline-block;
+}
+
+.place__type {
+  text-align: center;
+}
+
+.stamp__icon {
+  color: $basalt;
+  height: 24px;
+  margin-right: 10px;
+  width: 24px;
+}
+
+.type-stamp {
+  align-items: center;
+  display: flex;
+  padding: 0.25rem;
+  width: auto;
 }
 </style>
