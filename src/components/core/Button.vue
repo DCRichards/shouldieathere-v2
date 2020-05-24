@@ -13,7 +13,7 @@ export default {
   props: {
     variant: {
       type: String,
-      default: 'light',
+      default: 'dark',
       validator: (v) => variants.includes(v),
     },
   },

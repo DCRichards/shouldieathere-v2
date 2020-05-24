@@ -20,13 +20,20 @@
         </div>
       </div>
 
-      <h4 class="rating__text">
-        {{ slogan }}
-      </h4>
+      <div class="place__rating">
+        <component
+          class="rating__img"
+          :is="ratingImage" />
 
-      <h4>Rating Details</h4>
+        <h2 class="rating__text">
+          {{ slogan }}
+        </h2>
+      </div>
 
-      <div class="rating__details">
+      <div
+        class="rating__details"
+        v-if="place.RatingKey !== 'fhrs_awaitinginspection_en-gb'">
+        <h4>Rating Details</h4>
         <div class="info__stamps">
           <c-stamp icon="calendar">
             {{ ratingDate }} ({{ timeSinceRating }} ago)
@@ -44,19 +51,21 @@
       </div>
     </div>
 
-    <router-link to="/">
-      <c-button variant="dark">
-        Search Again
-      </c-button>
-    </router-link>
+    <div class="ratings__buttons">
+      <router-link to="/">
+        <c-button variant="dark">
+          Search Again
+        </c-button>
+      </router-link>
 
-    <router-link
-      to="report"
-      append>
-      <c-button variant="dark">
-        Report
-      </c-button>
-    </router-link>
+      <router-link
+        to="report"
+        append>
+        <c-button variant="dark">
+          Report
+        </c-button>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -68,9 +77,18 @@ import CButton from '@/components/core/Button.vue';
 import CLoading from '@/components/core/Loading.vue';
 import CStamp from '@/components/Stamp.vue';
 
-import PubIcon from '@/assets/images/icons/pub.svg';
 import CafeIcon from '@/assets/images/icons/cafe.svg';
+import MobileIcon from '@/assets/images/icons/mobile.svg';
+import PubIcon from '@/assets/images/icons/pub.svg';
+import RestaurantIcon from '@/assets/images/icons/restaurant.svg';
 import TakeawayIcon from '@/assets/images/icons/takeaway.svg';
+
+import RatingZero from '@/assets/images/ratings/0.svg';
+import RatingOne from '@/assets/images/ratings/1.svg';
+import RatingTwo from '@/assets/images/ratings/2.svg';
+import RatingThree from '@/assets/images/ratings/3.svg';
+import RatingFour from '@/assets/images/ratings/4.svg';
+import RatingFive from '@/assets/images/ratings/5.svg';
 
 function parseFlt(str) {
   const f = Number.parseFloat(str, 10);
@@ -95,24 +113,51 @@ export default {
     ...mapState('places', ['loading']),
 
     ratingDate() {
-      const rated = moment(this.place.RatingDate);
-      return rated.format('Do MMM YYYY');
+      return moment(this.place.RatingDate).format('Do MMM YYYY');
     },
 
     timeSinceRating() {
-      const now = moment();
       const rated = moment(this.place.RatingDate);
-      return moment.duration(now.diff(rated)).humanize();
+      return moment.duration(moment().diff(rated)).humanize();
     },
 
     typeIcon() {
+      const isCafe = ['caffe', 'cafe', 'coffee']
+        .some((w) => this.place.BusinessName.toLowerCase().includes(w));
+
       switch (this.place.BusinessTypeID) {
         case 1:
-          return CafeIcon;
+          return isCafe ? CafeIcon : RestaurantIcon;
         case 7843:
           return PubIcon;
+        case 7844:
+          return TakeawayIcon;
+        case 7:
+        case 14:
+        case 7846:
+          return MobileIcon;
         default:
           return TakeawayIcon;
+      }
+    },
+
+    ratingImage() {
+      switch (this.place.RatingKey) {
+        case 'fhrs_0_en-gb':
+          return RatingZero;
+        case 'fhrs_1_en-gb':
+          return RatingOne;
+        case 'fhrs_2_en-gb':
+          return RatingTwo;
+        case 'fhrs_3_en-gb':
+          return RatingThree;
+        case 'fhrs_4_en-gb':
+          return RatingFour;
+        case 'fhrs_5_en-gb':
+          return RatingFive;
+        case 'fhrs_awaitinginspection_en-gb':
+        default:
+          return RatingZero;
       }
     },
 
@@ -127,26 +172,23 @@ export default {
     },
 
     slogan() {
-      const rating = Number.parseInt(this.place.RatingValue, 10);
+      const base = `This place has a rating of ${this.place.RatingValue}`;
 
-      if (Number.isNaN(rating)) {
-        return `This place is ${this.rating}`;
-      }
-
-      const base = `This place has a rating of ${rating}`;
-      switch (rating) {
-        case 0:
-          return `${base}. This place is dirtier than the back of your builder's transit van.`;
-        case 1:
-          return `${base}. Big dirty stinkin' plates.`;
-        case 2:
-          return `${base}. There's more grime here than a Skepta record.`;
-        case 3:
-          return `${base}. Not great. Not terrible.`;
-        case 4:
-          return `${base}. You'll be okay.`;
-        case 5:
-          return `${base}. What a time to be alive! `;
+      switch (this.place.RatingKey) {
+        case 'fhrs_0_en-gb':
+          return 'Those dutty, dutty pigs!';
+        case 'fhrs_1_en-gb':
+          return 'There\'s more grime here than a Skepta record.';
+        case 'fhrs_2_en-gb':
+          return 'Big dirty stinkin\' plates, dirty stinkin\' plates.';
+        case 'fhrs_3_en-gb':
+          return 'Not great, not terrible.';
+        case 'fhrs_4_en-gb':
+          return 'Well, it\'s cleaner than a Kitchen Nightmares script.';
+        case 'fhrs_5_en-gb':
+          return 'Clean plate club!';
+        case 'fhrs_awaitinginspection_en-gb':
+          return 'We don\'t have a rating for here yet. Take your chances!';
         default:
           return base;
       }
@@ -168,7 +210,7 @@ export default {
   flex-direction: column;
   flex-grow: 1;
   justify-content: center;
-  margin: 1rem auto;
+  margin: 2rem;
   text-align: center;
 }
 
@@ -185,12 +227,17 @@ export default {
   }
 }
 
-.place-detail__rating {
-  margin: 2rem auto;
+.place__rating {
+  margin: 2rem 0;
+}
+
+.rating__img {
+  margin: 1rem;
+  max-width: 768px;
 }
 
 .rating__text {
-  margin: 2rem;
+  margin: 0 1rem;
 }
 
 .authority-name a {
@@ -217,5 +264,10 @@ export default {
   display: flex;
   padding: 0.25rem;
   width: auto;
+}
+
+.ratings__buttons {
+  display: flex;
+  justify-content: center;
 }
 </style>

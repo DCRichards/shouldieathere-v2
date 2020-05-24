@@ -12,6 +12,10 @@ export default new Router({
       component: () => import('@/views/Search.vue'),
     },
     {
+      path: '/about',
+      component: () => import('@/views/About.vue'),
+    },
+    {
       path: '/places/search',
       component: () => import('@/views/Places.vue'),
       props(route) {

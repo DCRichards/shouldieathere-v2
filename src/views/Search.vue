@@ -2,23 +2,23 @@
   <div class="search">
     <div class="search__container">
       <div class="search__action">
-        <h1>I'm thinking of going to...</h1>
+        <h1>{{ $t('search.header') }}</h1>
         <form
           class="search__form"
           @submit.prevent="search">
           <input-text
             v-model="name"
             icon="home"
-            placeholder="Restaurant"
+            :placeholder="$t('search.namePlaceholder')"
             required />
           <input-text
             v-model="address"
             icon="map-pin"
-            placeholder="Town, City, Postcode" />
+            :placeholder="$t('search.addressPlaceholder')" />
           <c-button
             type="submit"
             variant="dark">
-            Should I eat there?
+            {{ $t('global.title') }}
           </c-button>
         </form>
       </div>

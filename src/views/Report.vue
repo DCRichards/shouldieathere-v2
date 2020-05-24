@@ -4,36 +4,64 @@
     <div
       class="report-detail"
       v-if="!loading && place">
-      <h2>Had an issue with {{ place.BusinessName }}?</h2>
-      <p>If you have had an issue with poor service or a non-hygiene related issue, please contact the restaurant instead.</p>
-      <p>
-        Email
-        <a :href="`mailto:${place.LocalAuthorityEmailAddress}`">
-          {{ place.LocalAuthorityEmailAddress }}
-        </a>
-      </p>
-      <p>
-        Visit
-        <a :href="place.LocalAuthorityWebSite">
-          {{ place.LocalAuthorityWebSite }}
-        </a>
-      </p>
+      <h2>{{ $t('report.header', [place.BusinessName]) }}</h2>
+      <p>{{ $t('report.subtitle') }}</p>
+
+      <h5>{{ $t('report.reportFsa') }}</h5>
+      <p>{{ $t('report.fsaSubtitle') }}</p>
+      <a href="https://www.food.gov.uk/contact/consumers/report-problem?navref=quicklink/">
+        <c-button>
+          {{ $t('report.button') }}
+        </c-button>
+      </a>
+
+      <h5>{{ $t('report.reportLocal') }}</h5>
+      <div class="report__links">
+        <c-stamp icon="mail">
+          <a :href="mailTo">
+            {{ place.LocalAuthorityEmailAddress }}
+          </a>
+        </c-stamp>
+      </div>
+      <c-button @click="$router.go(-1)">
+        {{ $t('global.back') }}
+      </c-button>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex';
+import CStamp from '@/components/Stamp.vue';
+import CButton from '@/components/core/Button.vue';
 import CLoading from '@/components/core/Loading.vue';
 
 export default {
   components: {
     CLoading,
+    CStamp,
+    CButton,
   },
 
   computed: {
     ...mapGetters('places', ['place']),
     ...mapState('places', ['loading']),
+
+    mailTo() {
+      if (!this.place) {
+        return '';
+      }
+
+      const {
+        FHRSID,
+        LocalAuthorityEmailAddress,
+        BusinessName,
+        AddressLine1,
+        PostCode,
+      } = this.place;
+
+      return `mailto:${LocalAuthorityEmailAddress}?subject=${FHRSID}: ${BusinessName}, ${AddressLine1} ${PostCode}`;
+    },
   },
 
   created() {
@@ -45,7 +73,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .report {
   align-items: center;
   display: flex;
@@ -54,5 +82,19 @@ export default {
   justify-content: center;
   margin: 2rem;
   text-align: center;
+
+  h5 {
+    margin: 2rem 1rem 1rem;
+  }
+}
+
+.report__links {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+
+  a {
+    font-weight: bold;
+  }
 }
 </style>

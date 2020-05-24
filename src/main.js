@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import strings from './strings';
+import i18n from './strings';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
@@ -10,6 +10,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  strings,
+  i18n,
   render: (h) => h(App),
 }).$mount('#app');

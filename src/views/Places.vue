@@ -6,17 +6,17 @@
       <input-text
         v-model="newName"
         icon="home"
-        placeholder="Restaurant"
+        :placeholder="$t('search.namePlaceholder')"
         required />
       <input-text
         v-model="newAddress"
         icon="map-pin"
-        placeholder="Town, City, Postcode" />
+        :placeholder="$t('search.addressPlaceholder')" />
       <c-button
         :disabled="loading"
         type="submit"
         variant="dark">
-        Should I eat there?
+        {{ $t('global.title') }}
       </c-button>
     </form>
     <c-loading v-if="!places && loading" />
@@ -43,7 +43,7 @@
         :disabled="pagination.page < 2"
         v-html="icons['arrow-left'].toSvg()"
         variant="dark" />
-      <h4>{{ pagination.page }} of {{ pagination.totalPages }}</h4>
+      <h4>{{ $t('places.pages', [pagination.page, pagination.totalPages]) }}</h4>
       <c-button
         @click="nextPage"
         :disabled="pagination.totalPages <= pagination.page"
@@ -165,6 +165,7 @@ export default {
 
 .search-form {
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .page-control {

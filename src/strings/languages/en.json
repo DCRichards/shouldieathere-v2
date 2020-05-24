@@ -1,1 +1,22 @@
-{}
+{
+  "global": {
+    "title": "Should I Eat There?",
+    "back": "Back"
+  },
+  "search": {
+    "header": "I'm thinking of going to...",
+    "namePlaceholder": "Restaurant",
+    "addressPlaceholder": "Town, City, Postcode"
+  },
+  "places": {
+    "pages": "{0} of {1}"
+  },
+  "report": {
+    "header": "Had an issue with {0}?",
+    "subtitle": "If you have had an issue with poor service or a non-hygiene related issue, please contact the restaurant instead.",
+    "reportFsa": "Report to Food Standards Agency",
+    "fsaSubtitle": "The Food Standards Agency (FSA) offers a comprehensive tool for reporting hygiene issues.",
+    "reportLocal": "Contact your local authority",
+    "button": "Report"
+  }
+}
