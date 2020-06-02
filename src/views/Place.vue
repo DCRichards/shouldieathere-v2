@@ -2,14 +2,16 @@
   <div class="place">
     <c-loading v-if="loading" />
     <div
-      v-if="place && !loading"
-      class="place-detail">
-      <div class="header__title">
+      class="place-detail"
+      v-if="!loading && place">
+      <div
+        class="header__title">
         <h1>{{ place.BusinessName }}</h1>
         <h4>{{ formatAddress(place) }}</h4>
       </div>
 
-      <div class="place__type">
+      <div
+        class="place__type">
         <div class="info__stamps">
           <div class="type-stamp">
             <component
@@ -20,7 +22,13 @@
         </div>
       </div>
 
-      <div class="place__rating">
+      <c-map
+        class="place__map"
+        :lat="lat"
+        :lon="lon" />
+
+      <div
+        class="place__rating">
         <component
           class="rating__img"
           :is="ratingImage" />
@@ -73,9 +81,11 @@
 import moment from 'moment';
 import { mapGetters, mapState } from 'vuex';
 import { address as addressMixin } from '@/mixins';
+
 import CButton from '@/components/core/Button.vue';
 import CLoading from '@/components/core/Loading.vue';
 import CStamp from '@/components/Stamp.vue';
+import CMap from '@/components/Map.vue';
 
 import CafeIcon from '@/assets/images/icons/cafe.svg';
 import MobileIcon from '@/assets/images/icons/mobile.svg';
@@ -83,6 +93,7 @@ import PubIcon from '@/assets/images/icons/pub.svg';
 import RestaurantIcon from '@/assets/images/icons/restaurant.svg';
 import TakeawayIcon from '@/assets/images/icons/takeaway.svg';
 
+import RatingNa from '@/assets/images/ratings/na.svg';
 import RatingZero from '@/assets/images/ratings/0.svg';
 import RatingOne from '@/assets/images/ratings/1.svg';
 import RatingTwo from '@/assets/images/ratings/2.svg';
@@ -105,6 +116,7 @@ export default {
   components: {
     CButton,
     CLoading,
+    CMap,
     CStamp,
   },
 
@@ -157,7 +169,7 @@ export default {
           return RatingFive;
         case 'fhrs_awaitinginspection_en-gb':
         default:
-          return RatingZero;
+          return RatingNa;
       }
     },
 
@@ -188,7 +200,7 @@ export default {
         case 'fhrs_5_en-gb':
           return 'Clean plate club!';
         case 'fhrs_awaitinginspection_en-gb':
-          return 'We don\'t have a rating for here yet. Take your chances!';
+          return 'We don\'t have a rating yet. Take your chances!';
         default:
           return base;
       }
@@ -214,11 +226,6 @@ export default {
   text-align: center;
 }
 
-.place-detail {
-  margin-bottom: 2rem;
-  width: 100%;
-}
-
 .header__title {
   margin-bottom: 1rem;
 
@@ -238,6 +245,11 @@ export default {
 
 .rating__text {
   margin: 0 1rem;
+}
+
+.place__map {
+  margin: 1rem auto;
+  max-width: 768px;
 }
 
 .authority-name a {

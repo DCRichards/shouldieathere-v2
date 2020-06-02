@@ -2,6 +2,10 @@
 export const address = {
   methods: {
     formatAddress(place) {
+      if (!place) {
+        return '';
+      }
+
       const {
         AddressLine1,
         AddressLine2,

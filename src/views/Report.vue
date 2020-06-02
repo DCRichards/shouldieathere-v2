@@ -9,7 +9,9 @@
 
       <h5>{{ $t('report.reportFsa') }}</h5>
       <p>{{ $t('report.fsaSubtitle') }}</p>
-      <a href="https://www.food.gov.uk/contact/consumers/report-problem?navref=quicklink/">
+      <a
+        href="https://www.food.gov.uk/contact/consumers/report-problem?navref=quicklink/"
+        target="_blank">
         <c-button>
           {{ $t('report.button') }}
         </c-button>
@@ -23,6 +25,7 @@
           </a>
         </c-stamp>
       </div>
+
       <c-button @click="$router.go(-1)">
         {{ $t('global.back') }}
       </c-button>
