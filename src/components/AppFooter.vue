@@ -2,7 +2,11 @@
   <div class="footer">
     <span>
       Should I Eat There? &middot;
-      Freshly prepared with &hearts; by <a href="https://github.com/dcrichards">DCRichards</a>
+      Freshly prepared with &hearts; by <a
+        href="https://github.com/dcrichards"
+        target="_blank">
+        DCRichards
+      </a>
     </span>
   </div>
 </template>

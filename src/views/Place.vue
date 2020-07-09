@@ -22,11 +22,6 @@
         </div>
       </div>
 
-      <c-map
-        class="place__map"
-        :lat="lat"
-        :lon="lon" />
-
       <div
         class="place__rating">
         <component
