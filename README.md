@@ -1,6 +1,6 @@
-# @shouldieatthere/web
+# shouldieatthere-v2
 
-The source behind [shouldieatthere.co.uk](https://shouldieathere.co.uk).
+The upcoming release of [shouldieatthere.co.uk](https://shouldieathere.co.uk).
 
 ## Usage
 

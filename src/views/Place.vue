@@ -80,7 +80,6 @@ import { address as addressMixin } from '@/mixins';
 import CButton from '@/components/core/Button.vue';
 import CLoading from '@/components/core/Loading.vue';
 import CStamp from '@/components/Stamp.vue';
-import CMap from '@/components/Map.vue';
 
 import CafeIcon from '@/assets/images/icons/cafe.svg';
 import MobileIcon from '@/assets/images/icons/mobile.svg';
@@ -111,7 +110,6 @@ export default {
   components: {
     CButton,
     CLoading,
-    CMap,
     CStamp,
   },
 
