@@ -10,7 +10,7 @@ The upcoming release of [shouldieatthere.co.uk](https://shouldieathere.co.uk).
 docker-compose up --build
 ```
 
-The app will can be found at [localhost:9091](http://localhost:9091).
+The app can be found at [localhost:9091](http://localhost:9091).
 
 #### Without Docker
 
@@ -19,7 +19,7 @@ yarn
 yarn serve
 ```
 
-The app will can be found at [localhost:8080](http://localhost:8080).
+The app can be found at [localhost:8080](http://localhost:8080).
 
 ## Linting & Code Style
 
