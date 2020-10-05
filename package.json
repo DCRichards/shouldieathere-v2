@@ -46,6 +46,6 @@
     "stylelint-scss": "^3.14.2",
     "stylelint-webpack-plugin": "^1.2.1",
     "vue-svg-loader": "^0.16.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   }
 }
