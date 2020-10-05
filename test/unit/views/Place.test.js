@@ -37,11 +37,12 @@ describe('Place.vue', () => {
     const $route = {
       params: { id: '1022' },
     };
+    const $t = () => '';
 
     shallowMount(Place, {
       store,
       localVue,
-      mocks: { $route },
+      mocks: { $route, $t },
       stubs: ['router-link'],
     });
 

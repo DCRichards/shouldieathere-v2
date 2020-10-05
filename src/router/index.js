@@ -21,7 +21,7 @@ export default new Router({
       props(route) {
         const { name, address } = route.query;
         let page = Number.parseInt(route.query.page, 10);
-        if (Number.isNaN(page)) {
+        if (Number.isNaN(page) || page < 1) {
           page = 1;
         }
         return { name, address, page };
@@ -36,8 +36,12 @@ export default new Router({
       component: () => import('@/views/Report.vue'),
     },
     {
-      path: '*',
+      path: '/404',
       component: () => import('@/views/NotFound.vue'),
+    },
+    {
+      path: '*',
+      redirect: '/404',
     },
   ],
 });

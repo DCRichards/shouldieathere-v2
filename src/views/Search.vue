@@ -17,7 +17,8 @@
             :placeholder="$t('search.addressPlaceholder')" />
           <c-button
             type="submit"
-            variant="dark">
+            variant="dark"
+            :disabled="!name">
             {{ $t('global.title') }}
           </c-button>
         </form>

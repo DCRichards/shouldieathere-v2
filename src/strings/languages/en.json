@@ -11,6 +11,25 @@
   "places": {
     "pages": "{0} of {1}"
   },
+  "place": {
+    "ratingDetails": "Rating Details",
+    "ratedBy": "Rated by",
+    "report": "Report",
+    "searchAgain": "Search Again"
+  },
+  "loading": {
+    "loading": "Loading..."
+  },
+  "ratings": {
+    "5": "Clean plate club!",
+    "4": "Still, it's cleaner than Gordon Ramsay's language",
+    "3": "Not great, not terrible",
+    "2": "Big dirty stinking plates!",
+    "1": "More grime than the latest Skepta record",
+    "0": "Wash your kitchen you dirty, dirty pigs!",
+    "unknown": "We don't have a rating yet, take your chances!",
+    "default": "This place has a rating of {0}"
+  },
   "report": {
     "header": "Had an issue with {0}?",
     "subtitle": "If you have had an issue with poor service or a non-hygiene related issue, please contact the restaurant instead.",
@@ -18,5 +37,9 @@
     "fsaSubtitle": "The Food Standards Agency (FSA) offers a comprehensive tool for reporting hygiene issues.",
     "reportLocal": "Contact your local authority",
     "button": "Report"
+  },
+  "notFound": {
+    "title": "Not found",
+    "subtitle": "There's nothing here, not even a sausage."
   }
 }

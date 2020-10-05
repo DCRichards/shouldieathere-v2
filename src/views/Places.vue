@@ -19,7 +19,10 @@
         {{ $t('global.title') }}
       </c-button>
     </form>
-    <c-loading v-if="!places && loading" />
+
+    <c-loading
+      class="loading"
+      v-if="loading" />
 
     <div
       v-if="!loading && places"
@@ -38,17 +41,17 @@
     <div
       v-if="!loading && pagination.totalPages > 1"
       class="page-control">
-      <c-button
+      <button
+        class="arrow"
         @click="previousPage"
-        :disabled="pagination.page < 2"
-        v-html="icons['arrow-left'].toSvg()"
-        variant="dark" />
+        v-show="pagination.page >= 2"
+        v-html="icons['arrow-left'].toSvg()" />
       <h4>{{ $t('places.pages', [pagination.page, pagination.totalPages]) }}</h4>
-      <c-button
+      <button
+        class="arrow"
         @click="nextPage"
-        :disabled="pagination.totalPages <= pagination.page"
-        v-html="icons['arrow-right'].toSvg()"
-        variant="dark" />
+        v-show="pagination.totalPages > pagination.page"
+        v-html="icons['arrow-right'].toSvg()" />
     </div>
   </div>
 </template>
@@ -113,6 +116,10 @@ export default {
     },
 
     previousPage() {
+      if (this.page === 1) {
+        return;
+      }
+
       this.newPage -= 1;
       this.update();
     },
@@ -173,6 +180,13 @@ export default {
   display: flex;
   justify-content: center;
   margin: 1rem;
+
+  .arrow {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: .5rem;
+  }
 }
 
 .places-list {
@@ -193,5 +207,9 @@ export default {
   a {
     color: $basalt;
   }
+}
+
+.loading {
+  height: 100%;
 }
 </style>

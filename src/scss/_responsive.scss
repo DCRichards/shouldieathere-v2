@@ -10,25 +10,25 @@ $lg: 1200px;
     }
   }
  
-  @else if $class == sm {
+  @else if $class == 'sm' {
     @media (min-width: $xs) {
       @content;
     }
   }
  
-  @else if $class == md {
+  @else if $class == 'md' {
     @media (min-width: $sm) {
       @content;
     }
   }
  
-  @else if $class == lg {
+  @else if $class == 'lg' {
     @media (min-width: $md) {
       @content;
     }
   }
 
-  @else if $class == xl {
+  @else if $class == 'xl' {
     @media (min-width: $lg) {
       @content;
     }

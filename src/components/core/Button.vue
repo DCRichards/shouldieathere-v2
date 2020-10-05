@@ -22,13 +22,18 @@ export default {
 
 <style scoped lang="scss">
 @import '~@/scss/colors';
+@import '~@/scss/responsive';
 
 button {
   border: none;
   border-radius: 3px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin: 1rem;
   padding: 1rem 1.5rem;
+
+  @include screen-size('md') {
+    font-size: 1.5rem;
+  }
 
   &:hover {
     cursor: pointer;

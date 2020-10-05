@@ -1,9 +1,10 @@
 <template>
   <div class="not-found">
     <content-box>
-      <h1>Are you lost?</h1>
+      <h1>{{ $t('notFound.title') }}</h1>
+      <h2>{{ $t('notFound.subtitle') }}</h2>
       <router-link to="/">
-        <c-button>Yep.</c-button>
+        <c-button>{{ $t('global.back') }}</c-button>
       </router-link>
     </content-box>
   </div>
@@ -25,12 +26,6 @@ export default {
 @import '~@/scss/colors';
 
 .not-found {
-  background-color: $britain;
-  background-image: linear-gradient(rgba($black, 0.5), rgba($black, 0.8)), url('../assets/images/404-bg.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: $white;
   height: 100%;
   overflow: hidden;
 }

@@ -35,8 +35,8 @@
 
       <div
         class="rating__details"
-        v-if="place.RatingKey !== 'fhrs_awaitinginspection_en-gb'">
-        <h4>Rating Details</h4>
+        v-if="!awaitingInspection">
+        <h4>{{ $t('place.ratingDetails') }}</h4>
         <div class="info__stamps">
           <c-stamp icon="calendar">
             {{ ratingDate }} ({{ timeSinceRating }} ago)
@@ -44,7 +44,7 @@
           <c-stamp
             class="authority-name"
             icon="clipboard">
-            Rated by
+            {{ $t('place.ratedBy') }}
             <a
               target="_blank"
               :href="place.LocalAuthorityWebSite">{{ place.LocalAuthorityName }}
@@ -54,10 +54,12 @@
       </div>
     </div>
 
-    <div class="ratings__buttons">
+    <div
+      class="ratings__buttons"
+      v-if="!loading">
       <router-link to="/">
         <c-button variant="dark">
-          Search Again
+          {{ $t('place.searchAgain') }}
         </c-button>
       </router-link>
 
@@ -65,7 +67,7 @@
         to="report"
         append>
         <c-button variant="dark">
-          Report
+          {{ $t('place.report') }}
         </c-button>
       </router-link>
     </div>
@@ -81,6 +83,8 @@ import CButton from '@/components/core/Button.vue';
 import CLoading from '@/components/core/Loading.vue';
 import CStamp from '@/components/Stamp.vue';
 
+import constants from '@/constants';
+
 import CafeIcon from '@/assets/images/icons/cafe.svg';
 import MobileIcon from '@/assets/images/icons/mobile.svg';
 import PubIcon from '@/assets/images/icons/pub.svg';
@@ -94,6 +98,8 @@ import RatingTwo from '@/assets/images/ratings/2.svg';
 import RatingThree from '@/assets/images/ratings/3.svg';
 import RatingFour from '@/assets/images/ratings/4.svg';
 import RatingFive from '@/assets/images/ratings/5.svg';
+import RatingPass from '@/assets/images/ratings/pass.svg';
+import RatingImprove from '@/assets/images/ratings/improve.svg';
 
 function parseFlt(str) {
   const f = Number.parseFloat(str, 10);
@@ -146,21 +152,31 @@ export default {
       }
     },
 
+    awaitingInspection() {
+      const keys = [constants.FHRS_AWAITING_INSPECTION, constants.FHIS_AWAITING_INSPECTION];
+      return keys.includes(this.place.RatingKey);
+    },
+
     ratingImage() {
       switch (this.place.RatingKey) {
-        case 'fhrs_0_en-gb':
+        case constants.FHRS_0:
           return RatingZero;
-        case 'fhrs_1_en-gb':
+        case constants.FHRS_1:
           return RatingOne;
-        case 'fhrs_2_en-gb':
+        case constants.FHRS_2:
           return RatingTwo;
-        case 'fhrs_3_en-gb':
+        case constants.FHRS_3:
           return RatingThree;
-        case 'fhrs_4_en-gb':
+        case constants.FHRS_4:
           return RatingFour;
-        case 'fhrs_5_en-gb':
+        case constants.FHRS_5:
           return RatingFive;
-        case 'fhrs_awaitinginspection_en-gb':
+        case constants.FHIS_PASS:
+          return RatingPass;
+        case constants.FHIS_IMPROVEMENT_REQUIRED:
+          return RatingImprove;
+        case constants.FHRS_AWAITING_INSPECTION:
+        case constants.FHIS_AWAITING_INSPECTION:
         default:
           return RatingNa;
       }
@@ -177,23 +193,27 @@ export default {
     },
 
     slogan() {
-      const base = `This place has a rating of ${this.place.RatingValue}`;
+      const base = this.$t('ratings.default', [this.place.RatingValue]);
+      console.log(this.$t('ratings'));
 
       switch (this.place.RatingKey) {
-        case 'fhrs_0_en-gb':
-          return 'Those dutty, dutty pigs!';
-        case 'fhrs_1_en-gb':
-          return 'There\'s more grime here than a Skepta record.';
-        case 'fhrs_2_en-gb':
-          return 'Big dirty stinkin\' plates, dirty stinkin\' plates.';
-        case 'fhrs_3_en-gb':
-          return 'Not great, not terrible.';
-        case 'fhrs_4_en-gb':
-          return 'Well, it\'s cleaner than a Kitchen Nightmares script.';
-        case 'fhrs_5_en-gb':
-          return 'Clean plate club!';
-        case 'fhrs_awaitinginspection_en-gb':
-          return 'We don\'t have a rating yet. Take your chances!';
+        case constants.FHRS_0:
+          return this.$t('ratings.0');
+        case constants.FHRS_1:
+          return this.$t('ratings.1');
+        case constants.FHRS_2:
+          return this.$t('ratings.2');
+        case constants.FHIS_IMPROVEMENT_REQUIRED:
+        case constants.FHRS_3:
+          return this.$t('ratings.3');
+        case constants.FHRS_4:
+          return this.$t('ratings.4');
+        case constants.FHIS_PASS:
+        case constants.FHRS_5:
+          return this.$t('ratings.5');
+        case constants.FHRS_AWAITING_INSPECTION:
+        case constants.FHIS_AWAITING_INSPECTION:
+          return this.$t('ratings.unknown');
         default:
           return base;
       }
@@ -209,6 +229,7 @@ export default {
 
 <style scoped lang="scss">
 @import '~@/scss/colors';
+@import '~@/scss/responsive';
 
 .place {
   display: flex;
@@ -273,6 +294,11 @@ export default {
 
 .ratings__buttons {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+
+  @include screen-size('sm') {
+    flex-direction: row;
+  }
 }
 </style>
