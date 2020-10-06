@@ -194,7 +194,6 @@ export default {
 
     slogan() {
       const base = this.$t('ratings.default', [this.place.RatingValue]);
-      console.log(this.$t('ratings'));
 
       switch (this.place.RatingKey) {
         case constants.FHRS_0:
