@@ -6,7 +6,8 @@ import {
   PLACES_ERROR,
 } from '../types';
 
-const fhrs = new FHRS();
+const { VUE_APP_API_URL } = process.env;
+const fhrs = new FHRS({ baseUrl: VUE_APP_API_URL });
 
 export default {
   namespaced: true,

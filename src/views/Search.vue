@@ -7,11 +7,13 @@
           class="search__form"
           @submit.prevent="search">
           <input-text
+            aria-label="name"
             v-model="name"
             icon="home"
             :placeholder="$t('search.namePlaceholder')"
             required />
           <input-text
+            aria-label="address"
             v-model="address"
             icon="map-pin"
             :placeholder="$t('search.addressPlaceholder')" />

@@ -63,6 +63,19 @@ docker-compose --rm web yarn test
 ## No Docker
 yarn test
 ```
+## Production builds
+
+You'll need to add the CA Certificate in `config/ssl` for HTTPS to work correctly on your machine. Once you've done this, simply run:
+
+```bash
+# Docker
+docker-compose run --rm web -p 9091:8080 yarn run serve:production
+
+# No Docker
+yarn run serve:production
+```
+
+The site will load on [https://localhost:9091](https://localhost:9091). And the build will be available in the `dist/` folder.
 
 ## Configuration
 

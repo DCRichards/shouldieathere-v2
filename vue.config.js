@@ -25,5 +25,13 @@ module.exports = {
   devServer: {
     clientLogLevel: 'warning',
     quiet: false,
+    // https: {
+    //   key: readFileSync('./config/ssl/localhost.key'),
+    //   cert: readFileSync('./config/ssl/localhost.crt'),
+    // },
+  },
+
+  pwa: {
+    workboxPluginMode: 'GenerateSW',
   },
 };

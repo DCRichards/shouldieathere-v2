@@ -3,6 +3,7 @@
     <span>
       Should I Eat There? &middot;
       Freshly prepared with &hearts; by <a
+        rel="noreferrer"
         href="https://github.com/dcrichards"
         target="_blank">
         DCRichards

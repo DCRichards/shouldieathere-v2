@@ -19,4 +19,5 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint',
   },
+  ignorePatterns: ['dist/**/*'],
 };

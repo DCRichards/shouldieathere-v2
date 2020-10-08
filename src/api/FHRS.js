@@ -8,9 +8,13 @@ import Establishments from './Establishments';
  * @link{https://api.ratings.food.gov.uk}
  */
 export default class FHRS {
-  constructor() {
+  constructor({ baseUrl }) {
+    if (!baseUrl) {
+      throw new Error('baseUrl is required');
+    }
+
     this._client = axios.create({
-      baseURL: 'https://api.ratings.food.gov.uk/',
+      baseURL: baseUrl,
       headers: {
         'x-api-version': '2',
         'accept-language': 'en-GB',

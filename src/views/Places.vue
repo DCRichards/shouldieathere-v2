@@ -4,11 +4,13 @@
       class="search-form"
       @submit.prevent="update">
       <input-text
+        aria-label="name"
         v-model="newName"
         icon="home"
         :placeholder="$t('search.namePlaceholder')"
         required />
       <input-text
+        aria-label="address"
         v-model="newAddress"
         icon="map-pin"
         :placeholder="$t('search.addressPlaceholder')" />
@@ -44,13 +46,13 @@
       <button
         class="arrow"
         @click="previousPage"
-        v-show="pagination.page >= 2"
+        :disabled="pagination.page < 2"
         v-html="icons['arrow-left'].toSvg()" />
       <h4>{{ $t('places.pages', [pagination.page, pagination.totalPages]) }}</h4>
       <button
         class="arrow"
         @click="nextPage"
-        v-show="pagination.totalPages > pagination.page"
+        :disabled="pagination.totalPages === pagination.page"
         v-html="icons['arrow-right'].toSvg()" />
     </div>
   </div>

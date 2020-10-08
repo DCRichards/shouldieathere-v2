@@ -43,7 +43,7 @@
           </c-stamp>
           <c-stamp
             class="authority-name"
-            icon="clipboard">
+            icon="check-square">
             {{ $t('place.ratedBy') }}
             <a
               target="_blank"
@@ -75,15 +75,18 @@
 </template>
 
 <script>
-import moment from 'moment';
+import parseDate from 'date-fns/parse';
+import formatDate from 'date-fns/format';
+import formatDistance from 'date-fns/formatDistance';
+
 import { mapGetters, mapState } from 'vuex';
 import { address as addressMixin } from '@/mixins';
+
+import constants from '@/constants';
 
 import CButton from '@/components/core/Button.vue';
 import CLoading from '@/components/core/Loading.vue';
 import CStamp from '@/components/Stamp.vue';
-
-import constants from '@/constants';
 
 import CafeIcon from '@/assets/images/icons/cafe.svg';
 import MobileIcon from '@/assets/images/icons/mobile.svg';
@@ -124,12 +127,13 @@ export default {
     ...mapState('places', ['loading']),
 
     ratingDate() {
-      return moment(this.place.RatingDate).format('Do MMM YYYY');
+      const rated = parseDate(this.place.RatingDate, 'yyyy-MM-dd\'T\'HH:mm:ss', new Date());
+      return formatDate(rated, 'do MMM yyyy');
     },
 
     timeSinceRating() {
-      const rated = moment(this.place.RatingDate);
-      return moment.duration(moment().diff(rated)).humanize();
+      const rated = parseDate(this.place.RatingDate, 'yyyy-MM-dd\'T\'HH:mm:ss', new Date());
+      return formatDistance(rated, new Date());
     },
 
     typeIcon() {
