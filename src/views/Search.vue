@@ -85,7 +85,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 1rem;
   text-align: center;
   width: 100%;
 }

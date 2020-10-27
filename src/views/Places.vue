@@ -26,6 +26,12 @@
       class="loading"
       v-if="loading" />
 
+    <h4
+      class="places-none"
+      v-if="!loading && !places.length">
+      No places found.
+    </h4>
+
     <div
       v-if="!loading && places"
       class="places-list">
@@ -189,6 +195,12 @@ export default {
     cursor: pointer;
     margin: .5rem;
   }
+}
+
+.places-none {
+  color: $dust;
+  margin: 2rem;
+  text-align: center;
 }
 
 .places-list {

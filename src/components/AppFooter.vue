@@ -17,15 +17,20 @@ export default {};
 </script>
 
 <style scoped lang="scss">
-@import '~@/scss/_colors.scss';
+@import '~@/scss/colors.scss';
+@import '~@/scss/responsive.scss';
 
 .footer {
   background: $black;
   color: $white;
-  font-size: .9rem;
+  font-size: .8rem;
   padding: .8rem 0;
   text-align: center;
   width: 100%;
+
+  @include screen-size('md') {
+    font-size: 1rem;
+  }
 
   a {
     font-weight: bold;

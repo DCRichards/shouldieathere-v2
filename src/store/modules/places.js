@@ -14,6 +14,7 @@ export default {
 
   state: {
     places: [],
+    query: {},
     pagination: {
       page: 0,
       perPage: 0,
@@ -35,14 +36,29 @@ export default {
   },
 
   actions: {
-    async search({ commit }, {
+    async search({ commit, state }, {
       name, address, page = 1, perPage = 20,
     }) {
+      const alreadyLoaded = state.query.name === name
+        && state.query.address === address
+        && state.pagination.page === page
+        && state.pagination.perPage === perPage;
+
+      console.log(alreadyLoaded);
+
+      if (alreadyLoaded) {
+        return;
+      }
+
       commit(PLACES_LOADING);
 
       try {
         const { data } = await fhrs.establishments.search(name, address, page, perPage);
         commit(PLACES_SET, {
+          query: {
+            name,
+            address,
+          },
           places: data.establishments,
           totalPages: data.meta.totalPages,
           page,
@@ -78,7 +94,7 @@ export default {
 
   mutations: {
     [PLACES_SET](state, {
-      places, page, perPage, totalPages,
+      query, places, page, perPage, totalPages,
     }) {
       Object.assign(state, {
         places,
@@ -87,6 +103,7 @@ export default {
           perPage,
           totalPages,
         },
+        query,
         loading: false,
         error: undefined,
       });
