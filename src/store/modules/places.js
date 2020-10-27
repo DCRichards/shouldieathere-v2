@@ -44,8 +44,6 @@ export default {
         && state.pagination.page === page
         && state.pagination.perPage === perPage;
 
-      console.log(alreadyLoaded);
-
       if (alreadyLoaded) {
         return;
       }
