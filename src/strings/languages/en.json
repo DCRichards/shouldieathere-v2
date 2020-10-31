@@ -28,6 +28,7 @@
     "1": "More grime than the latest Skepta record",
     "0": "Wash your kitchen you dirty, dirty pigs!",
     "unknown": "We don't have a rating yet, take your chances!",
+    "exempt": "Don't worry, it's exempt!",
     "default": "This place has a rating of {0}"
   },
   "report": {

@@ -35,7 +35,7 @@
 
       <div
         class="rating__details"
-        v-if="!awaitingInspection">
+        v-if="!noRating">
         <h4>{{ $t('place.ratingDetails') }}</h4>
         <div class="info__stamps">
           <c-stamp icon="calendar">
@@ -156,8 +156,12 @@ export default {
       }
     },
 
-    awaitingInspection() {
-      const keys = [constants.FHRS_AWAITING_INSPECTION, constants.FHIS_AWAITING_INSPECTION];
+    noRating() {
+      const keys = [
+        constants.FHRS_AWAITING_INSPECTION,
+        constants.FHIS_AWAITING_INSPECTION,
+        constants.FHRS_EXEMPT,
+      ];
       return keys.includes(this.place.RatingKey);
     },
 
@@ -214,6 +218,8 @@ export default {
         case constants.FHIS_PASS:
         case constants.FHRS_5:
           return this.$t('ratings.5');
+        case constants.FHRS_EXEMPT:
+          return this.$t('ratings.exempt');
         case constants.FHRS_AWAITING_INSPECTION:
         case constants.FHIS_AWAITING_INSPECTION:
           return this.$t('ratings.unknown');

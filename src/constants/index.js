@@ -7,6 +7,7 @@ export default {
   FHRS_4: 'fhrs_4_en-gb',
   FHRS_5: 'fhrs_5_en-gb',
   FHRS_AWAITING_INSPECTION: 'fhrs_awaitinginspection_en-gb',
+  FHRS_EXEMPT: 'fhrs_exempt_en-gb',
   // FHIS (Scotland)
   FHIS_PASS: 'fhis_pass_en-gb',
   FHIS_IMPROVEMENT_REQUIRED: 'fhis_improvement_required_en-gb',

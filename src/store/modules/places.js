@@ -50,8 +50,11 @@ export default {
 
       commit(PLACES_LOADING);
 
+      const searchName = name ? name.trim() : name;
+      const searchAddress = address ? address.trim() : address;
+
       try {
-        const { data } = await fhrs.establishments.search(name, address, page, perPage);
+        const { data } = await fhrs.establishments.search(searchName, searchAddress, page, perPage);
         commit(PLACES_SET, {
           query: {
             name,
